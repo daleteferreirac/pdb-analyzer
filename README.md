@@ -1,1 +1,1 @@
-description of the project: analyzer pdb structures 
+A simple scientific tool to analyze PDB protein structures.
