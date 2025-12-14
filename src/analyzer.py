@@ -9,4 +9,8 @@ count_residues = count_residue_types(residues)
 
 print(f"Total residues: {len(residues)}")
 print("First five residues:", list(residues.items())[:5])
-print("Count of residues: ", count_residues)
+
+print("Residue composition:")
+for res, count in count_residues.items():
+    print(res, count)
+
