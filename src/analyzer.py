@@ -1,9 +1,11 @@
 # Main module of the structural PDB analyzer project.
 from utils import load_pdb, extract_residues, count_residue_types
 
+# Load atoms from PDB file
 atoms = load_pdb("../data/1CRN.pdb")
 print(len(atoms))
 
+# Extract unique amino acid residues
 residues = extract_residues(atoms)
 count_residues = count_residue_types(residues)
 
