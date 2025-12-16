@@ -47,3 +47,28 @@ def count_residue_types(residues):
             counts[res_name] += 1
 
     return counts
+
+def classify_residues(residues):
+    """
+    Classify residues based on hydrophobic, polar and charged.
+    use the dictionary residues: {(chain, res_num): res_name}
+    returns: dict {class_residue: count}
+    """
+    hydrophobics = {"ALA", "VAL", "LEU", "ILE", "MET", "PHE", "TRP", "PRO"}
+    polars = {"SER", "THR", "ASN", "GLN", "TYR", "CYS"}
+    charged = {"ARG", "LYS", "HIS", "ASP", "GLU"}
+
+    classes = {
+        "HYDROPHOBICS": set(),
+        "POLAR": set(),
+        "CHARGED": set()
+    }
+    for res_name in residues.values():
+        if res_name in hydrophobics:
+            classes["HYDROPHOBICS"].add(res_name)
+        if res_name in polars:
+            classes["POLAR"].add(res_name)
+        if res_name in charged:
+            classes["CHARGED"].add(res_name)
+
+    return classes
