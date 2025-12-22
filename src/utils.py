@@ -80,7 +80,16 @@ def classify_residues(residues):
         "CHARGED": 0
     }
 
-    for res_name in residues.values():
+    chain_counts = {}
+
+    for (chain, _),res_name in residues.items():
+        if chain not in chain_counts:
+            chain_counts[chain] = {
+                "HYDROPHOBICS": 0,
+                "POLAR": 0,
+                "CHARGED": 0
+            }
+
         if res_name in hydrophobics:
             classes["HYDROPHOBICS"].add(res_name)
             counts["HYDROPHOBICS"] += 1
@@ -93,6 +102,16 @@ def classify_residues(residues):
 
     total = sum(counts.values())
     for key in counts:
-        counts[key] = {"count": counts[key], "percentage": round((counts[key] / total)*100, 2)}
+        counts[key] = {"count": counts[key], "percentage": round((counts[key] / total)*100, 2) if total > 0 else 0}
 
-    return classes, counts
+    for chain, class_counts in chain_counts.items():
+        total_chain = sum(class_counts.values())
+        for cls in class_counts:
+            class_counts[cls] = {
+                "count": class_counts[cls],
+                "percentage": round((class_counts[cls] / total_chain) * 100, 2)
+                if total_chain > 0 else 0
+            }
+
+    return classes, counts, chain_counts
+

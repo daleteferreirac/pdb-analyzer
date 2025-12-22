@@ -17,7 +17,8 @@ print("Residue composition:")
 for res, count in count_residues.items():
     print(res, count)
 
-classes, counts = classify_residues(residues) # tuple unpacking
+classes, counts, chain_counts = classify_residues(residues) # tuple unpacking
 print("Residue classes:", classes)
 print("Residue counts:", counts)
+print("% per chain:", chain_counts)
 
