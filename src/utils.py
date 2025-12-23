@@ -93,12 +93,15 @@ def classify_residues(residues):
         if res_name in hydrophobics:
             classes["HYDROPHOBICS"].add(res_name)
             counts["HYDROPHOBICS"] += 1
+            chain_counts[chain]["HYDROPHOBICS"] += 1
         if res_name in polars:
             classes["POLAR"].add(res_name)
             counts["POLAR"] += 1
+            chain_counts[chain]["POLAR"] += 1
         if res_name in charged:
             classes["CHARGED"].add(res_name)
             counts["CHARGED"] += 1
+            chain_counts[chain]["CHARGED"] += 1
 
     total = sum(counts.values())
     for key in counts:
@@ -109,7 +112,7 @@ def classify_residues(residues):
         for cls in class_counts:
             class_counts[cls] = {
                 "count": class_counts[cls],
-                "percentage": round((class_counts[cls] / total_chain) * 100, 2)
+                "percentage": round((class_counts[cls]/total_chain) * 100, 2)
                 if total_chain > 0 else 0
             }
 

@@ -2,7 +2,7 @@
 from utils import load_pdb, extract_residues, count_residue_types, classify_residues
 
 # Load atoms from PDB file
-atoms = load_pdb("../data/1CRN.pdb")
+atoms = load_pdb("../data/1A3N.pdb")
 print(f"Number of atoms: {len(atoms)}")
 
 # Extract amino acid residues
@@ -18,7 +18,7 @@ for res, count in count_residues.items():
     print(res, count)
 
 classes, counts, chain_counts = classify_residues(residues) # tuple unpacking
-print("Residue classes:", classes)
-print("Residue counts:", counts)
+print("Total residue classes:", classes)
+print("Total residue counts:", counts)
 print("% per chain:", chain_counts)
 
