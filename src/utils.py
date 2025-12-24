@@ -33,7 +33,7 @@ def extract_residues(atom_lines):
 
         key = (chain, res_num)
         if key not in residues:
-            residues[key] = res_name # ('A', '1'): 'THR'...
+            residues[key] = res_name # ('A', '1'): 'THR', (('A', '2'), 'LEU'), (('A', '3'), 'SER'),...
 
             if chain not in chain_info:
                 chain_info[chain] = 1
