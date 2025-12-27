@@ -1,5 +1,4 @@
 # Helper functions for the structural analyzer
-
 def load_pdb(filepath):
     """
     Loads a PDB file.
@@ -128,8 +127,17 @@ def multiple_protein_analyzer(*filepaths):
         protein_name = path.split("/")[-1]
         print(f"Protein: {protein_name}")
         atoms = load_pdb(path)
-        print(f"    Number of atoms: {len(atoms)}")
+        print(f"Number of atoms: {len(atoms)}")
+        # Extract amino acid residues
+        residues, chain_info = extract_residues(atoms)
+        print(f"Total residues: {len(residues)}")
+        print("First five residues: ", list(residues.items())[:5])
+        print(f"chain information: {chain_info}")
 
+        classes, counts, chain_counts = classify_residues(residues)  # tuple unpacking
+        print("Total residue classes:", classes)
+        print("Total residue counts:", counts)
+        print("% per chain:", chain_counts)
 
     return
 
