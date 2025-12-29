@@ -1,3 +1,4 @@
+import os
 # Helper functions for the structural analyzer
 def load_pdb(filepath):
     """
@@ -136,7 +137,7 @@ def analyze_proteins(*filepaths):
     dict = {}
 
     for path in filepaths:
-        protein_name = path.split("/")[-1]
+        protein_name = os.path.splitext(os.path.basename(path))[0]
         atoms = load_pdb(path)
         # extract amino acid residues
         residues, chain_info = extract_residues(atoms)
