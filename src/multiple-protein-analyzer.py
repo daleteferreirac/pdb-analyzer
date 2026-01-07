@@ -1,7 +1,6 @@
 # # Compares proteins and generates a CSV file.
 from utils import analyze_proteins
 import csv
-import matplotlib.pyplot as plt
 
 protein1 = "../data/1A3N.pdb"
 protein2 = "../data/1CRN.pdb"

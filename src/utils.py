@@ -166,4 +166,3 @@ def analyze_proteins(*filepaths):
         }
 
     return results
-
