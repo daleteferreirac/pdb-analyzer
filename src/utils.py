@@ -144,6 +144,37 @@ def classify_residues(residues):
 
     return counts, chain_counts
 
+def extract_atom_coordinates(atom_lines):
+    """
+    Returns a list of atoms with coordinates.
+    Each atom: dict with keys: chain, res_num, res_name, atom_name, x, y, z
+    """
+    atoms = []
+
+    for line in atom_lines:
+        if line.startswith("ATOM"):
+            atom_name = line[12:16].strip()
+            res_name = line[17:20].strip()
+            chain = line[21].strip()
+            res_num = line[22:26].strip()
+
+            x = float(line[30:38].strip())
+            y = float(line[38:46].strip())
+            z = float(line[46:54].strip())
+
+            atoms.append({
+                "chain": chain,
+                "res_num": res_num,
+                "res_name": res_name,
+                "atom_name": atom_name,
+                "x": x,
+                "y": y,
+                "z": z
+            })
+
+    return atoms
+
+
 def analyze_proteins(*filepaths):
     """
     Receives multiple PDB file paths and returns the information organized.

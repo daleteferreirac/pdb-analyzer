@@ -1,5 +1,5 @@
 # Analyzes a single protein and returns information in dictionary and graph format.
-from utils import analyze_proteins
+from utils import analyze_proteins, load_pdb, extract_atom_coordinates
 import csv
 import matplotlib.pyplot as plt
 
@@ -28,3 +28,7 @@ for protein, data in results.items():
     plt.ylabel("Number of residues")
     plt.title(f"Residue class composition – {protein}")
     plt.show()
+
+atoms_lines = load_pdb("../data/1CRN.pdb")
+coords_data = extract_atom_coordinates(atoms_lines)
+print(coords_data)
