@@ -1,5 +1,5 @@
 # Analyzes a single protein and returns information in dictionary and graph format.
-from utils import analyze_proteins, load_pdb, extract_atom_coordinates
+from utils import analyze_proteins, load_pdb, extract_atom_coordinates, atomic_distance
 import csv
 import matplotlib.pyplot as plt
 
@@ -32,3 +32,8 @@ for protein, data in results.items():
 atoms_lines = load_pdb("../data/1CRN.pdb")
 coords_data = extract_atom_coordinates(atoms_lines)
 print(coords_data)
+
+contacts = atomic_distance(coords_data)
+print("First 10 contacts:")
+for c in list(contacts)[:10]:
+    print(c)

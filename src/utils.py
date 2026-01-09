@@ -1,5 +1,8 @@
-import os
 # Helper functions for the structural analyzer
+
+import os
+import math
+
 def load_pdb(filepath):
     """
     Load ATOM and HETATM records from a PDB file.
@@ -144,10 +147,34 @@ def classify_residues(residues):
 
     return counts, chain_counts
 
+def analyze_proteins(*filepaths):
+    """
+    Receives multiple PDB file paths and returns the information organized.
+    :param filepaths: tuple of str
+        PDB file paths
+    :return: dict
+    """
+    results = {}
+
+    for path in filepaths:
+        protein_name = os.path.splitext(os.path.basename(path))[0]
+
+        atoms = load_pdb(path)
+        # extract amino acid residues and hetatm
+        residues, chain_info, waters, ligands = extract_residues(atoms)
+        counts, chain_counts = classify_residues(residues)  # tuple unpacking
+        results[protein_name] = {
+            "atoms": len(atoms), "residues": len(residues), "First five residues": (list(residues.items())[:5]),
+            "residue-chain": chain_info, "residues-classes-counts": counts, "classes-chain": chain_counts, "ligands": ligands, "waters": len(waters)
+        }
+
+    return results
+
 def extract_atom_coordinates(atom_lines):
     """
     Returns a list of atoms with coordinates.
     Each atom: dict with keys: chain, res_num, res_name, atom_name, x, y, z
+    [{'chain': 'A', 'res_num': '1', 'res_name': 'THR', 'atom_name': 'N', 'x': 17.047, 'y': 14.099, 'z': 3.625} ....
     """
     atoms = []
 
@@ -174,26 +201,30 @@ def extract_atom_coordinates(atom_lines):
 
     return atoms
 
-
-def analyze_proteins(*filepaths):
+def distance(atom1, atom2):
     """
-    Receives multiple PDB file paths and returns the information organized.
-    :param filepaths: tuple of str
-        PDB file paths
-    :return: dict
+
+    :param atom1:
+    :param atom2:
+    :return:
     """
-    results = {}
+    dx = atom1["x"] - atom2["x"]
+    dy = atom1["y"] - atom2["y"]
+    dz = atom1["z"] - atom2["z"]
+    return math.sqrt(dx * dx + dy * dy + dz * dz)
 
-    for path in filepaths:
-        protein_name = os.path.splitext(os.path.basename(path))[0]
+def atomic_distance(atoms, cutoff=4.5): # contacts atom-atom
+    """
+        Returns list of tuples:
+        (atom1, atom2, distance)
+        """
+    contacts = []
 
-        atoms = load_pdb(path)
-        # extract amino acid residues and hetatm
-        residues, chain_info, waters, ligands = extract_residues(atoms)
-        counts, chain_counts = classify_residues(residues)  # tuple unpacking
-        results[protein_name] = {
-            "atoms": len(atoms), "residues": len(residues), "First five residues": (list(residues.items())[:5]),
-            "residue-chain": chain_info, "residues-classes-counts": counts, "classes-chain": chain_counts, "ligands": ligands, "waters": len(waters)
-        }
+    n = len(atoms)
+    for i in range(n):
+        for j in range(i + 1, n):
+            d = distance(atoms[i], atoms[j])
+            if d <= cutoff:
+                contacts.append((atoms[i], atoms[j], d))
 
-    return results
+    return contacts
