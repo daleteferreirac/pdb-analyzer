@@ -228,3 +228,23 @@ def atomic_distance(atoms, cutoff=4.5): # contacts atom-atom
                 contacts.append((atoms[i], atoms[j], d))
 
     return contacts
+
+def detect_residue_contacts(atoms, cutoff=4.5):
+    """
+    Returns set of residue pairs in contact:
+    ((chain1, res1), (chain2, res2))
+    """
+    contacts = set()
+
+    n = len(atoms)
+    for i in range(n):
+        for j in range(i+1, n):
+            d = distance(atoms[i], atoms[j])
+            if d <= cutoff:
+                res1 = (atoms[i]["chain"], atoms[i]["res_num"])
+                res2 = (atoms[j]["chain"], atoms[j]["res_num"])
+
+                if res1 != res2:
+                    contacts.add((res1, res2))
+
+    return contacts
