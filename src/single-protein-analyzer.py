@@ -34,7 +34,7 @@ coords_data = extract_atom_coordinates(atoms_lines)
 
 contacts = detect_residue_contacts(coords_data, cutoff=4.5)
 print(f"Number of residue contacts: {len(contacts)}")
-print("First 10 contacts:")
+print("10 contacts:")
 for c in list(contacts)[:10]: # pair of contact: (('chain', 'residue number'), ('chain', 'residue number'))
     print(c)
 

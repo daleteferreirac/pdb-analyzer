@@ -114,7 +114,7 @@ def classify_residues(residues):
 
     chain_counts = {}
 
-    for (chain, _),res_name in residues.items():
+    for (chain, _),res_name in residues.items(): # ignore the residue number
         if chain not in chain_counts:
             chain_counts[chain] = {
                 "HYDROPHOBICS": 0,
@@ -234,7 +234,7 @@ def detect_residue_contacts(atoms, cutoff=4.5):
     Returns set of residue pairs in contact:
     ((chain1, res1), (chain2, res2))
     """
-    contacts = set()
+    contacts = set() # avoid duplicates
 
     n = len(atoms)
     for i in range(n):
