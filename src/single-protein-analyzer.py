@@ -38,4 +38,16 @@ print("10 contacts:")
 for c in list(contacts)[:10]: # pair of contact: (('chain', 'residue number'), ('chain', 'residue number'))
     print(c)
 
+# matrix of contacts
+res = len(residues)
+matrix = []
+for i in range(res):
+    row = []
+    for j in range(res):
+        row.append(0)
+    matrix.append(row)
+
+for line in matrix:
+    print(line)
+
 
