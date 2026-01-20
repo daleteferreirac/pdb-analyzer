@@ -47,7 +47,8 @@ for i in range(res):
         row.append(0)
     matrix.append(row)
 
-for line in matrix:
-    print(line)
+index_residues = {} # key: i, value: res number, {'900': 0, '1073': 1, '1129': 2, '1147': 3,...}
+for i, res in enumerate(residues):
+    index_residues[res] = i
 
 
