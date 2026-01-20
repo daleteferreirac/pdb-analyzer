@@ -249,6 +249,6 @@ def detect_residue_contacts(atoms, cutoff=4.5):
 
     residues = set() # it has to be a set, not a list
     for i in range(n):
-        residues.add(atoms[i]["res_num"])
+        residues.add(atoms[i]["res_num"]) # {'900', '1073', '1129', '1147', '1128',....}
 
     return contacts, residues # made a set of residues to construct the matrix of contacts
