@@ -4,7 +4,7 @@ import csv
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap, BoundaryNorm
 
-protein = "../data/4AG8.pdb"
+protein = "../data/1A6M.pdb"
 
 results = analyze_proteins(protein)
 for protein, data in results.items():
@@ -29,7 +29,7 @@ for protein, data in results.items():
     plt.title(f"Residue class composition – {protein}")
 #    plt.show()
 
-atoms_lines = load_pdb("../data/4AG8.pdb")
+atoms_lines = load_pdb("../data/1A6M.pdb")
 coords_data = extract_atom_coordinates(atoms_lines)
 
 contacts, residues = detect_residue_contacts(coords_data, cutoff=4.5)
@@ -64,7 +64,7 @@ for line in matrix:
     print(line)
 
 # colors: 0 = black, 1 = yellow
-cmap = ListedColormap(["black", "yellow"])
+cmap = ListedColormap(["white", "black"])
 norm = BoundaryNorm([0, 0.5, 1], cmap.N)
 
 plt.figure(figsize=(6, 6))
